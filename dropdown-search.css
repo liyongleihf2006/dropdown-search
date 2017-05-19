@@ -1,0 +1,18 @@
+.hidden{
+    display: none;
+}
+.dropdown-search{}
+.dropdown-search-input{
+    width: calc( 100% - 4px );
+}
+.dropdown-search-panel{
+    position: absolute;
+    width: inherit;
+}
+.dropdown-search-panel ul{
+    padding-left: 0;
+    margin: 0;
+}
+.dropdown-search-item{
+    cursor: pointer;
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>dropdown-search</title>
+    <link rel="stylesheet" href="dropdown-search.css">
+    <style>
+        #dropdown-search{
+            width: 400px;
+            display: inline-block;
+        }
+        .dropdown-search-panel{
+            background-color:#ddd;
+            border: 1px solid #ccc;
+            height: 200px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .dropdown-search-item:hover{
+            background-color: #ccc;
+        }
+    </style>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="dropdown-search.js"></script>
+</head>
+<body>
+    <div id="dropdown-search"></div>
+    <button id="btn">获取当前选中的数据</button>
+    <label>当前选中的数据是:<span id="show"></span></label>
+    <script>
+        $("#dropdown-search").dropdownSearch({
+            name:"search_url",
+            cls:"dropdown-search",
+            inputCls:"dropdown-search-input",
+            panelCls:"dropdown-search-panel",
+            itemCls:"dropdown-search-item",
+            delay:300,
+            triggerMinLength:3,
+            formatter:function(data){
+                return data.url;
+            },
+            onTrigger:function(value){
+                var _self=this;
+                setTimeout(function(){
+                    var data=[],i=0;
+                    for(;i<100;i++){
+                        data.push({id:Math.floor(Math.random()*10000)+"-"+new Date().getTime(),url:"http://"+value.replace(/http:\/\/|\.com/g,"")+Math.floor(Math.random()*10000)+".com"});
+                    }
+                    _self.dropdownSearch("setPanelData",data)
+                },1000);
+            },
+            onItemClick:function(data,input,container){
+                input.value=data.url;
+            }
+        });
+        $("#btn").on("click",function(){
+            $("#show").text( JSON.stringify($("#dropdown-search").dropdownSearch("getData")));
+        })
+    </script>
+</body>
+</html>
